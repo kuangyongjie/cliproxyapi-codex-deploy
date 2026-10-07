@@ -16,12 +16,18 @@ if [ -z "${PROXY_API_KEY:-}" ]; then
   echo "错误：.env 中 PROXY_API_KEY 为空"
   exit 1
 fi
-if [ -z "${PROXY_DOMAIN:-}" ]; then
-  echo "错误：请先在 .env 中填写 PROXY_DOMAIN（你的代理域名）"
+
+HOST_PORT="${HOST_PORT:-8317}"
+if [ -n "${PROXY_DOMAIN:-}" ]; then
+  # 有域名：走 HTTPS（需自行配好 Nginx，见 nginx/ 示例）
+  BASE_URL="https://${PROXY_DOMAIN}/v1"
+elif [ -n "${PROXY_HOST:-}" ]; then
+  # 无域名：直连 http://IP:端口/v1
+  BASE_URL="http://${PROXY_HOST}:${HOST_PORT}/v1"
+else
+  echo "错误：请在 .env 中填写 PROXY_DOMAIN（域名）或 PROXY_HOST（服务器 IP，直连用）"
   exit 1
 fi
-
-BASE_URL="https://${PROXY_DOMAIN}/v1"
 
 CONFIG_TOML=$(cat <<EOF
 model_provider = "cliproxyapi"
