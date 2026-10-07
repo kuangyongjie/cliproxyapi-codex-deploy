@@ -52,6 +52,7 @@ docker compose exec cli-proxy-api /CLIProxyAPI/CLIProxyAPI -no-browser --codex-l
 - 域名能通但请求 404 → `/v1/` 路径被改写或丢失
 - 行为诡异 → 漏了 `wire_api = "responses"`
 - `auth.json` 里填了真正的 OpenAI key → 不需要，那里只放代理的下游 key
+- 8317/1455 端口被占用 → `ss -tlnp | grep 8317` 找到占用者；停掉它或改 `docker-compose.yml` 的端口映射（setup.sh 启动前会自动检查并给出明确报错）
 
 ## 维护
 

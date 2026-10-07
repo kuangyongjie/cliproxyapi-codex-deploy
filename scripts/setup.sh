@@ -13,6 +13,26 @@ echo "==> 检查 Docker 环境"
 command -v docker >/dev/null 2>&1 || { echo "错误：未找到 docker，请先安装 Docker"; exit 1; }
 docker compose version >/dev/null 2>&1 || { echo "错误：docker compose 插件不可用"; exit 1; }
 
+echo "==> 检查端口占用"
+port_in_use() { # $1=端口；127.0.0.1 能连上即视为被占用（纯 bash，无外部依赖）
+  (exec 3<>"/dev/tcp/127.0.0.1/$1") 2>/dev/null
+}
+our_cid="$(docker compose ps -q cli-proxy-api 2>/dev/null | head -1)"
+our_running="false"
+[ -n "$our_cid" ] && our_running="$(docker inspect -f '{{.State.Running}}' "$our_cid" 2>/dev/null || echo false)"
+if [ "$our_running" != "true" ]; then
+  for p in 8317 1455; do
+    if port_in_use "$p"; then
+      echo "错误：宿主机端口 $p 已被占用，容器无法启动"
+      echo "排查占用：ss -tlnp | grep $p   或   docker ps -a"
+      echo "二选一：停掉占用该端口的服务，或修改 docker-compose.yml 的端口映射后重跑本脚本"
+      exit 1
+    fi
+  done
+else
+  echo "    cli-proxy-api 已在运行，跳过端口检查"
+fi
+
 echo "==> 准备目录"
 mkdir -p auth
 
