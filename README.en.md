@@ -1,5 +1,7 @@
 # CLIProxyAPI + Codex One-Command Deploy
 
+> [中文](README.md) | English
+
 Put Codex behind your own OpenAI-compatible gateway: one command to start the service with Docker, OAuth state centralized in the proxy layer, one stable `/v1` endpoint shared across machines and tools.
 
 Full walkthrough and troubleshooting: [CLIProxyAPI + Codex Setup: Docker, OAuth & Reverse Proxy Guide](https://aitokenhacks.com/en/posts/cliproxyapi-codex-docker-proxy/) · [中文 README](README.md)

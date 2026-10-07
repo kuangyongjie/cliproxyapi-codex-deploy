@@ -8,8 +8,9 @@ auth-dir: "~/.cli-proxy-api"
 
 # 下游 key：客户端调用代理时用的凭证，不是上游 OpenAI key
 # 可给不同项目发不同的 key，轮换/吊销都在代理层完成
+# __PROXY_API_KEY__ 由 setup.sh 替换为 YAML 单引号转义后的实际 key
 api-keys:
-  - "__PROXY_API_KEY__"
+  - __PROXY_API_KEY__
 
 remote-management:
   allow-remote: false

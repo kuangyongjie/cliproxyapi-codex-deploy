@@ -1,5 +1,7 @@
 # CLIProxyAPI + Codex 一键部署
 
+> [English](README.en.md) | 中文
+
 把 Codex 接到自己可控的 OpenAI 兼容网关：Docker 一键起服务，OAuth 状态集中在代理层，多台机器 / 多个工具共用一个 `/v1` 入口。
 
 完整原理与排障说明见博客文章：[CLIProxyAPI + Codex Setup: Docker, OAuth & Reverse Proxy Guide](https://aitokenhacks.com/en/posts/cliproxyapi-codex-docker-proxy/) · [English README](README.en.md)

@@ -43,9 +43,15 @@ if [ -z "$PROXY_API_KEY" ]; then
   exit 1
 fi
 
+yaml_sq() { # YAML single-quote a string so any special chars stay safe
+  printf "'%s'" "$(printf '%s' "$1" | sed "s/'/''/g")"
+}
+
 if [ ! -f config.yaml ]; then
   echo "==> 生成 config.yaml"
-  sed "s/__PROXY_API_KEY__/$PROXY_API_KEY/" config.example.yaml > config.yaml
+  # key 先做 YAML 单引号转义，再转义 sed 特殊字符后注入模板
+  esc_key="$(yaml_sq "$PROXY_API_KEY" | sed 's/[|&]/\\&/g')"
+  sed "s|__PROXY_API_KEY__|$esc_key|" config.example.yaml > config.yaml
 else
   echo "==> config.yaml 已存在，跳过生成（如需更换 key 请手动编辑）"
 fi
