@@ -43,7 +43,7 @@ Don't miss: `base_url` must point at `https://your-domain/v1`, and `wire_api = "
 
 ## Optional: Nginx HTTPS
 
-`nginx/codex-proxy.conf.example` is a drop-in server block — replace `__PROXY_DOMAIN__`. Keep `/v1/` intact, no rewrites.
+`nginx/codex-proxy.conf.example` is a drop-in server block — replace `__PROXY_DOMAIN__`. Keep `/v1/` intact, no rewrites. If you changed `HOST_PORT`, update the port in `proxy_pass` to match.
 
 ## Common failures (check these first)
 
@@ -52,6 +52,7 @@ Don't miss: `base_url` must point at `https://your-domain/v1`, and `wire_api = "
 - Domain works but requests 404 → `/v1/` path rewritten or dropped
 - Weird behavior → `wire_api = "responses"` was skipped
 - Real OpenAI key placed in `auth.json` → not needed, only the proxy's downstream key goes there
+- Port 8317 already in use → set `HOST_PORT=18317` (or another free port) in `.env` and re-run `./scripts/setup.sh`; the script pre-checks ports and fails with a clear message
 
 ## Maintenance
 

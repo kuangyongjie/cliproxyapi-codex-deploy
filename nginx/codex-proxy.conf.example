@@ -9,6 +9,7 @@ server {
   # ssl_certificate_key /path/to/privkey.pem;
 
   location /v1/ {
+    # 若 .env 中修改了 HOST_PORT，这里的 8317 请改为对应的宿主机端口
     proxy_pass http://127.0.0.1:8317/v1/;
     proxy_http_version 1.1;
     proxy_set_header Host $host;

@@ -4,8 +4,8 @@ services:
     container_name: cli-proxy-api
     restart: unless-stopped
     ports:
-      # 主 API 端口
-      - "8317:8317"
+      # 主 API 端口：宿主机端口可通过 .env 中的 HOST_PORT 修改（默认 8317），容器内端口保持 8317
+      - "${HOST_PORT:-8317}:8317"
       # Codex OAuth 本地回调端口，登录流程需要，漏掉会导致登录失败
       - "1455:1455"
     volumes:
