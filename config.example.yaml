@@ -1,0 +1,16 @@
+# CLIProxyAPI 最小可用配置（Codex 反代场景）
+# 由 scripts/setup.sh 复制为 config.yaml 并填入 PROXY_API_KEY
+# 完整选项见上游 config.example.yaml
+
+host: ""
+port: 8317
+auth-dir: "~/.cli-proxy-api"
+
+# 下游 key：客户端调用代理时用的凭证，不是上游 OpenAI key
+# 可给不同项目发不同的 key，轮换/吊销都在代理层完成
+api-keys:
+  - "__PROXY_API_KEY__"
+
+remote-management:
+  allow-remote: false
+  secret-key: ""

@@ -1,0 +1,14 @@
+services:
+  cli-proxy-api:
+    image: eceasy/cli-proxy-api:latest
+    container_name: cli-proxy-api
+    restart: unless-stopped
+    ports:
+      # 主 API 端口
+      - "8317:8317"
+      # Codex OAuth 本地回调端口，登录流程需要，漏掉会导致登录失败
+      - "1455:1455"
+    volumes:
+      - ./config.yaml:/CLIProxyAPI/config.yaml
+      # OAuth 状态持久化：容器重建/重启后登录态不丢失
+      - ./auth:/root/.cli-proxy-api
